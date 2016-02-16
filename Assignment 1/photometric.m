@@ -76,8 +76,8 @@ function photometric
     end
     for j = 2:s(1)
         for i = 2:s(2)
-            height_map(i,j) = (height_map(i-1,j) + ps(i,j))/2 + ...
-                              (height_map(i,j-1) + qs(i,j))/2;
+            height_map(i,j) = (height_map(i-1,j) + qs(i,j))/2 + ...
+                              (height_map(i,j-1) + ps(i,j))/2;
         end
     end
 
