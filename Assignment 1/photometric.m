@@ -81,11 +81,16 @@ function photometric
         end
     end
 
-    % Plot the surface normals (subsample so it's faster and prettier)
-    quiver3(1:8:512,1:8:512,height_map(1:8:end,1:8:end),normals(1:8:end,1:8:end,1),normals(1:8:end,1:8:end,2),normals(1:8:end,1:8:end,3))
+    % Subsample so it's faster and prettier
+    sample = 8;
+    % Plot the surface normals ()
+    quiver3(1:sample:s(2),1:sample:s(1),height_map(1:sample:end,1:sample:end), ...
+            normals(1:sample:end,1:sample:end,1), ...
+            normals(1:sample:end,1:sample:end,2), ...
+            normals(1:sample:end,1:sample:end,3));
     hold on;
     % Plot the height map (subsample so it's faster and prettier)
-    mesh(1:8:512,1:8:512,height_map(1:8:end,1:8:end))
+    mesh(1:sample:s(2),1:sample:s(1),height_map(1:sample:end,1:sample:end));
     hold off;
     %imshow(albedos, [])
 end
