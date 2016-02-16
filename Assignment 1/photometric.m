@@ -8,12 +8,12 @@ function photometric
 
     %Hardcode V = kS
     %It is important that the light source vectors have the same magnitude
-    k = 10000;
-    Ss = [0,0,sqrt(3);
-        1,1,1;
-        -1,1,1;
-        1,-1,1;
-        -1,-1,1];
+    k = 300;
+    Ss = [0,0,1;
+        sqrt(1/3),sqrt(1/3),sqrt(1/3);
+        -sqrt(1/3),sqrt(1/3),sqrt(1/3);
+        sqrt(1/3),-sqrt(1/3),sqrt(1/3);
+        -sqrt(1/3),-sqrt(1/3),sqrt(1/3)];
     V = k * Ss;
     
     %Initialize the albedos and normals matrices
@@ -58,7 +58,7 @@ function photometric
 
     % Propagating the y derivatives only in the first column doesn't really
     % make sense. I believe they should be propagated everywhere.
-%     for j = 1:s(2)
+%    for j = 1:s(2)
 %         for i = 2:s(1)
 %             height_map(i,j) = height_map(i-1,j) + qs(i,j);
 %         end
@@ -87,4 +87,5 @@ function photometric
     % Plot the height map (subsample so it's faster and prettier)
     mesh(1:8:512,1:8:512,height_map(1:8:end,1:8:end))
     hold off;
+    %imshow(albedos, [])
 end
