@@ -9,7 +9,7 @@ function converted = convert(imagename, space)
       case 'hsv'
           converted = rgb2hsv(image);
       otherwise
-          error(['Do not know what this color space is :''','(']);
+          error('Possible color space options are opponent, rgb, hsv.');
   end
   subplot(2,2,1);
   imshow(image);
