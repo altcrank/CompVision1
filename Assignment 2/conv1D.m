@@ -1,6 +1,6 @@
 function imOut = conv1D(image,H)
     s = size(image);
-    dim = length(image(1,1,:));
+    dim = length(size(image));
     kernelLength = length(H);
     H = repmat(H, dim, 1);
     for x = 1:s(1)
