@@ -5,7 +5,7 @@ function imOut = gaussianConv(im_path,sigma_x,sigma_y)
     %We have to either convert it to RGB or do conv on all channels
     %separately
     %image = rgb2gray(image);
-    dim = length(size(image));
+    dim = length(image(1,1,:));
     kernelLength = 11;
     
     % convolution with 1D filters
@@ -25,12 +25,9 @@ function imOut = gaussianConv(im_path,sigma_x,sigma_y)
     
     % From scratch implementation
     % apply horizontal first - sigma_y
-    imOutCustom = gaussianConv1D(image,sigma_y, kernelLength);
+    imOutCustom = gaussianConv1D(image,sigma_y,kernelLength,0);
     % apply vertical next - sigma_x
-    imOutCustom = gaussianConv1D(permute(imOutCustom, [2 1 3]),sigma_x, kernelLength);
-    % the second 1D returns a "transpose" since it gets a "transpose"
-    % "transpose" it back
-    imOutCustom = permute(imOutCustom, [2 1 3]);
+    imOutCustom = gaussianConv1D(imOutCustom,sigma_x,kernelLength,1);
     
     subplot(2,2,1);
     imshow(image);
