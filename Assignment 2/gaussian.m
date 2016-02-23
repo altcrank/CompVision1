@@ -1,4 +1,4 @@
-function G = gaussian(sigma, kernelLength)
+function G = gaussian(sigma,kernelLength)
     % Generate coordinates, with the origin in the middle
     x = generateCoordinates(kernelLength);
     % Create Gaussian Mask
