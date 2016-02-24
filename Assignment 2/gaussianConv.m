@@ -23,18 +23,10 @@ function imOut = gaussianConv(im_path,sigma_x,sigma_y)
         imOut2D(:,:,i) = conv2(image(:,:,i),Gxy,'same');
     end
     
-    % From scratch implementation
-    % apply horizontal first - sigma_y
-    imOutCustom = gaussianConv1D(image,sigma_y,kernelLength,0);
-    % apply vertical next - sigma_x
-    imOutCustom = gaussianConv1D(imOutCustom,sigma_x,kernelLength,1);
-    
-    subplot(2,2,1);
+    subplot(1,3,1);
     imshow(image);
-    subplot(2,2,2);
+    subplot(1,3,2);
     imshow(imOut);
-    subplot(2,2,3);
+    subplot(1,3,3);
     imshow(imOut2D);
-    subplot(2,2,4);
-    imshow(imOutCustom);
 end
