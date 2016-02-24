@@ -16,6 +16,7 @@ function imOut = gaussianConv(im_path,sigma_x,sigma_y)
     for i = 1:dim
         imOut(:,:,i) = conv2(Gx,Gy,image(:,:,i),'same');
     end
+    disp(imOut);
     
     % convolution with 2D filter
     Gxy = Gx' * Gy;
@@ -23,10 +24,10 @@ function imOut = gaussianConv(im_path,sigma_x,sigma_y)
         imOut2D(:,:,i) = conv2(image(:,:,i),Gxy,'same');
     end
     
-    subplot(1,3,1);
-    imshow(image);
-    subplot(1,3,2);
+    %subplot(1,3,1);
+    %imshow(image);
+    %subplot(1,3,2);
     imshow(imOut);
-    subplot(1,3,3);
-    imshow(imOut2D);
+    %subplot(1,3,3);
+    %imshow(imOut2D);
 end
