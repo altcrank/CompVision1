@@ -1,10 +1,11 @@
-function v = lucas_kanade(Ix,Iy,It,i,j,window_size)
-    [i_start,i_end] = compute_start_end(i,window_size);
-    [j_start,j_end] = compute_start_end(j,window_size);
+function v = lucas_kanade(Ix,Iy,It,row,col,window)
+    [n,m] = size(Ix);
+    [start_row,end_row] = patch_coordinates(row,window,n);
+    [start_col,end_col] = patch_coordinates(col,window,m);
     
-    A(:,1) = get_patch(Ix,i_start,i_end,j_start,j_end); 
-    A(:,2) = get_patch(Iy,i_start,i_end,j_start,j_end);
-    b = - get_patch(It,i_start,i_end,j_start,j_end);
+    A(:,1) = patch_vector(Ix,start_row,end_row,start_col,end_col); 
+    A(:,2) = patch_vector(Iy,start_row,end_row,start_col,end_col);
+    b = - patch_vector(It,start_row,end_row,start_col,end_col);
 
     M = A' * A;
     sm = size(M);
