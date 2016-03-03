@@ -1,10 +1,10 @@
 function H = harris(fileName, threshold, window, sigma)
     img = im2double(rgb2gray(imread(fileName)));
 
-    kSize = 11;   
-    [G, Gx, Gy] = gaussians(kSize, sigma);    
+    kSize = 11;
+    [G,Gx] = gaussians(sigma,sigma,kSize);
     Ix = imfilter(img, Gx);
-    Iy = imfilter(img, Gy);
+    Iy = imfilter(img, Gx');
     
     Ix2 = Ix.^2;
     Iy2 = Iy.^2;
