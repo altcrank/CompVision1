@@ -1,5 +1,7 @@
 function H = harris(fileName, threshold, window, sigma)
-    img = im2double(rgb2gray(imread(fileName)));
+    
+    colorImg = imread(fileName);
+    img = im2double(rgb2gray(colorImg));
 
     kSize = 11;
     [G,Gx] = gaussians(sigma,sigma,kSize);
@@ -34,10 +36,8 @@ function H = harris(fileName, threshold, window, sigma)
            end
         end
     end
-    
-    max(max(H))
-    %imshow('pingpong/0000.jpeg');
-    imshow(img);
+
+    imshow(colorImage);
     hold on;
     plot(cols, rows, 'g*');
     hold off;
