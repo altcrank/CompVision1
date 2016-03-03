@@ -15,9 +15,18 @@ function v = assignment2(image1_path,image2_path)
     
     s = size(image1);
     window_size = 15;
-    for i = 1:fix(s(1)/window_size)
-        for j = 1:fix(s(2)/window_size)
-            v(i,j,:) = lucas_kanade(Ix,Iy,It,i,j,window_size);
+    half = ceil(window_size/2);
+    rows = half:window_size:s(1);
+    if rows(end) + half - 1 > s(1);
+        rows = rows(1:end-1);
+    end
+    cols = half:window_size:s(2);
+    if cols(end) + half - 1 > s(2);
+        cols = cols(1:end-1);
+    end
+    for row = rows
+        for col = cols
+            v(i,j,:) = lucas_kanade(Ix,Iy,It,row,col,window_size);
         end
     end
     sv = size(v);
