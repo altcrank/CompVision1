@@ -26,8 +26,8 @@ function v = assignment2(image1_path,image2_path)
     end
     for row = rows
         for col = cols
-            x = (row+center)/window;
-            y = (col+center)/window;
+            x = floor((row+center)/window);
+            y = floor((col+center)/window);
             v(x,y,:) = lucas_kanade(Ix,Iy,It,row,col,window);
         end
     end
