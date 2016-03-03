@@ -1,4 +1,4 @@
-function [ It ] = lucas_kanade(image1_path,image2_path)
+function v = lucas_kanade(image1_path,image2_path)
     image1 = im2double(imread(image1_path));
     image2 = im2double(imread(image2_path));
     if (length(image1(1,1,:)) == 3)
