@@ -1,4 +1,4 @@
-function H = harris(fileName, threshold, window, sigma)
+function [H,rows,cols] = harris(fileName, threshold, window, sigma)
     
     img = im2double(imread(fileName));
     if (length(img(1,1,:)) == 3)

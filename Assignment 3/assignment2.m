@@ -10,7 +10,7 @@ function v = assignment2(image1_path,image2_path)
     %Ix = imfilter(image2,-Gd);
     %Iy = imfilter(image2,-Gd');
     %Compute spatial and temporal derivatives
-    [Ix,Iy] = gradient(image1);
+    [Ix,Iy] = gradient(image2);
     It = image2 - image1;
     
     s = size(image1);
