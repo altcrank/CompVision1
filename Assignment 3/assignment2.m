@@ -14,19 +14,21 @@ function v = assignment2(image1_path,image2_path)
     It = image2 - image1;
     
     s = size(image1);
-    window_size = 15;
-    half = ceil(window_size/2);
-    rows = half:window_size:s(1);
-    if rows(end) + half - 1 > s(1);
+    window = 15;
+    center = ceil(window/2);
+    rows = center:window:s(1);
+    if rows(end) + center - 1 > s(1);
         rows = rows(1:end-1);
     end
-    cols = half:window_size:s(2);
-    if cols(end) + half - 1 > s(2);
+    cols = center:window:s(2);
+    if cols(end) + center - 1 > s(2);
         cols = cols(1:end-1);
     end
     for row = rows
         for col = cols
-            v(row,col,:) = lucas_kanade(Ix,Iy,It,row,col,window_size);
+            x = (row+center)/window;
+            y = (col+center)/window;
+            v(x,y,:) = lucas_kanade(Ix,Iy,It,row,col,window);
         end
     end
     sv = size(v);
