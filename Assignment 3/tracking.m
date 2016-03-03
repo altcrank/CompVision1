@@ -23,14 +23,31 @@ function res = tracking(images_path)
     rows = r;
     cols = c;
     is = size(images);
+    v = VideoWriter('video.avi');
+    open(v);
+    
+    frame = images(1,:,:);
+    for feature = 1:length(r)
+        frame = insertMarker(frame,[rows(frame),cols(frame)],'star');
+    end
+    writeVideo(v, frame);
+    
     for frame_no = 1:is(1)-1
         image1 = image(frame_no,:,:);
         image2 = image(frame_no+1,:,:);
+        frame = image2;
+        [Ix,Iy] = gradient(image1);
+        It = image2 - image1;
+        window_size = 15;
         for feature = 1:length(r)
-            row = rows(feature);
-            col = cols(feature);
-            v(frame_no,row,col) = lucas_kanade(image1,image2,row,col);
+            row = round(rows(feature));
+            col = round(cols(feature));
+            [u,v] = lucas_kanade(Ix,Iy,It,row,col,window_size);
+            rows(feature) = rows(feature) + u;
+            cols(feature) = cols(feature) + v;
+            frame = insertMarker(I,[x,y],'star');
         end
+        writeVideo(v, frame);
     end
-    
+    close(v);
 end
