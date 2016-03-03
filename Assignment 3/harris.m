@@ -1,7 +1,9 @@
 function H = harris(fileName, threshold, window, sigma)
     
-    colorImg = imread(fileName);
-    img = im2double(rgb2gray(colorImg));
+    img = im2double(imread(fileName));
+    if (length(img(1,1,:)) == 3)
+        img = rgb2gray(img);
+    end
 
     kSize = 11;
     [G,Gx] = gaussians(sigma,sigma,kSize);
@@ -37,7 +39,7 @@ function H = harris(fileName, threshold, window, sigma)
         end
     end
 
-    imshow(colorImage);
+    imshow(imread(fileName));
     hold on;
     plot(cols, rows, 'g*');
     hold off;
