@@ -1,9 +1,4 @@
-function [H,rows,cols] = harris(fileName, threshold, window, sigma)
-    
-    img = im2double(imread(fileName));
-    if (length(img(1,1,:)) == 3)
-        img = rgb2gray(img);
-    end
+function [H,rows,cols] = harris(img, threshold, window, sigma)
 
     kSize = 11;
     [G,Gx] = gaussians(sigma,sigma,kSize);
@@ -38,9 +33,4 @@ function [H,rows,cols] = harris(fileName, threshold, window, sigma)
            end
         end
     end
-
-    imshow(imread(fileName));
-    hold on;
-    plot(cols, rows, 'g*');
-    hold off;
 end
