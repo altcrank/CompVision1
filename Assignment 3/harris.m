@@ -2,8 +2,8 @@ function [H,rows,cols] = harris(img, threshold, window, sigma)
 
     kSize = 11;
     [G,Gx] = gaussians(sigma,sigma,kSize);
-    Ix = imfilter(img, Gx);
-    Iy = imfilter(img, Gx');
+    Ix = imfilter(img, Gx');
+    Iy = imfilter(img, Gx);
     
     Ix2 = Ix.^2;
     Iy2 = Iy.^2;
