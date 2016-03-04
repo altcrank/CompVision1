@@ -5,12 +5,13 @@ function v = assignment2(image1_path,image2_path)
         image1 = rgb2gray(image1);
         image2 = rgb2gray(image2);
     end
+    disp(size(image1));
     %Derivatives of Gaussian look ok only if negated
-    %Gd = gaussianDer(sigma_i,sigma_d,kernel_size);
+    %Gd = gaussians(1,1,15);
     %Ix = imfilter(image2,-Gd);
     %Iy = imfilter(image2,-Gd');
     %Compute spatial and temporal derivatives
-    [Ix,Iy] = gradient(image2);
+    [Iy,Ix] = gradient(image2);
     It = image2 - image1;
     
     s = size(image1);
@@ -28,10 +29,10 @@ function v = assignment2(image1_path,image2_path)
         for col = cols
             x = floor((row+center)/window);
             y = floor((col+center)/window);
-            v(x,y,:) = lucas_kanade(Ix,Iy,It,row,col,window);
+            v(x,y,:) = lucas_kanade(-Ix,Iy,It,row,col,window);
         end
     end
     sv = size(v);
-    quiver(1:sv(1),sv(2):-1:1,v(:,:,1),v(:,:,1));
+    quiver(1:sv(2),sv(1):-1:1,v(:,:,1),v(:,:,1));
 end
 
