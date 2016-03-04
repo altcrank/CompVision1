@@ -1,4 +1,4 @@
-function video_filename = tracking(images_path, threshold, window, sigma)
+function video_filename = tracking(images_path,threshold,window,sigma)
     %Read images
     [original_images,rgb] = read_images(images_path);
     % Get working images - grayscale
@@ -40,11 +40,7 @@ function video_filename = tracking(images_path, threshold, window, sigma)
         frame = select_frame(original_images,frame_no+1,rgb);
         
         % Prepare gradients for lucas-kanade
-        [G, Gd] = gaussians(1,1,15);
-        Ix = - imfilter(image1,Gd');
-        Iy = - imfilter(image1,Gd);
-        %[Iy,Ix] = gradient(image1);
-        It = image2 - image1;
+        [Ix,Iy,It] = compute_gradients(image1,image2,sigma,sigma,window);
         
         % Do lucas-kanade for each corner
         for feature = 1:length(r)
