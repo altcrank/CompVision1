@@ -1,0 +1,17 @@
+*.zip
+
+*.pdf
+*.aux
+*.tex
+*.log
+
+*.avi
+
+*.jpg
+*.jpeg
+*.ppm
+*.png
+*pgm
+
+*.ppt
+*.mat

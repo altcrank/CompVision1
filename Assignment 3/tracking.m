@@ -1,53 +1,60 @@
-function res = tracking(images_path)
-    files = dir(images_path);
-    i = 1;
-    for file = files'
-        rel_name = [images_path,'/',file.name];
-        if isdir(rel_name)
-            continue
-        end
-        image = im2double(imread(rel_name));
-        if (length(image(1,1,:)) == 3)
-            image = rgb2gray(image);
-        end
-        images(i,:,:) = image;
-        i = i + 1;
+function video_filename = tracking(images_path,threshold,window,sigma)
+    %Read images
+    [original_images,rgb] = read_images(images_path);
+    % Get working images - grayscale
+    if rgb
+        images = convert_to_grayscale(original_images);
+    else
+        images = original_images;
     end
     
-    %Configure those somehow
-    thr = 0.00005;
-    window = 15;
-    sigma = 1;
-    [H r c] = harris(images(1,:,:),thr,window,sigma);
-    
-    rows = r;
-    cols = c;
-    is = size(images);
-    v = VideoWriter('video.avi');
+    %Open a video file for writing
+    video_filename = [images_path,'.avi']; 
+    v = VideoWriter(video_filename);
     open(v);
     
-    frame = images(1,:,:);
-    for feature = 1:length(r)
-        frame = insertMarker(frame,[rows(frame),cols(frame)],'star');
-    end
-    writeVideo(v, frame);
+    %thr = 0.00005;
+    %window = 15;
+    %sigma = 1;
+    % Detect corners using Harris corner detector
+    [~,r,c] = harris(squeeze(images(1,:,:)),threshold,window,sigma);
+    % Copy rows and columns so that you don't change the original returned
+    % ones
+    rows = r;
+    cols = c;
     
+    frame = select_frame(original_images,1,rgb);
+    % Mark corners on frame
+    for feature = 1:length(r)
+        frame = mark_corner_in_frame(frame,rows(feature),cols(feature),5,rgb);
+    end
+    % write frame in video
+    writeVideo(v,frame);
+    
+    is = size(images);
     for frame_no = 1:is(1)-1
-        image1 = image(frame_no,:,:);
-        image2 = image(frame_no+1,:,:);
-        frame = image2;
-        [Ix,Iy] = gradient(image1);
-        It = image2 - image1;
-        window_size = 15;
+        % get two subsequent frames
+        image1 = squeeze(images(frame_no,:,:));
+        image2 = squeeze(images(frame_no+1,:,:));
+        % get frame
+        frame = select_frame(original_images,frame_no+1,rgb);
+        
+        % Prepare gradients for lucas-kanade
+        [Ix,Iy,It] = compute_gradients(image1,image2,sigma,sigma,window);
+        
+        % Do lucas-kanade for each corner
         for feature = 1:length(r)
             row = round(rows(feature));
             col = round(cols(feature));
-            [u,v] = lucas_kanade(Ix,Iy,It,row,col,window_size);
-            rows(feature) = rows(feature) + u;
-            cols(feature) = cols(feature) + v;
-            frame = insertMarker(I,[x,y],'star');
+            u = lucas_kanade(Ix,Iy,It,row,col,window);
+            rows(feature) = rows(feature) + u(1);
+            cols(feature) = cols(feature) + u(2);
+            % mark corner in frame
+            frame = mark_corner_in_frame(frame,rows(feature),cols(feature),5,rgb);
         end
+        % write frame in video
         writeVideo(v, frame);
     end
     close(v);
+    %implay(video_filename);
 end

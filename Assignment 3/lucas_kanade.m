@@ -12,6 +12,7 @@ function v = lucas_kanade(Ix,Iy,It,row,col,window)
     if rank(M) < sm(1)
         v = zeros([sm(1) 1]);
     else
-        v = M \ (A' * b);
+        %v = M \ (A' * b);
+        v = (pinv(M) * A') * b;
     end
 end

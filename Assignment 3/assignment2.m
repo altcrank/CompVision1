@@ -5,25 +5,24 @@ function v = assignment2(image1_path,image2_path)
         image1 = rgb2gray(image1);
         image2 = rgb2gray(image2);
     end
-    %Derivatives of Gaussian look ok only if negated
-    %Gd = gaussianDer(sigma_i,sigma_d,kernel_size);
-    %Ix = imfilter(image2,-Gd);
-    %Iy = imfilter(image2,-Gd');
-    %Compute spatial and temporal derivatives
-    [Ix,Iy] = gradient(image1);
-    It = image2 - image1;
+    window = 15;
+    sigma = 1;
+    % Prepare gradients for lucas-kanade
+    [Ix,Iy,It] = compute_gradients(image1,image2,sigma,sigma,window);
     
     s = size(image1);
-    window = 15;
     center = ceil(window/2);
+    %Prepare to loop (split into regions)
     rows = center:window:s(1);
-    if rows(end) + center - 1 > s(1);
+    cols = center:window:s(2);
+    % Possibly remove last center if region not completely in image
+    if rows(end) + center - 1 > s(1)
         rows = rows(1:end-1);
     end
-    cols = center:window:s(2);
-    if cols(end) + center - 1 > s(2);
+    if cols(end) + center - 1 > s(2)
         cols = cols(1:end-1);
     end
+    %loop trough regions and compute velocity vectors
     for row = rows
         for col = cols
             x = floor((row+center)/window);
@@ -32,6 +31,7 @@ function v = assignment2(image1_path,image2_path)
         end
     end
     sv = size(v);
-    quiver(1:sv(1),sv(2):-1:1,v(:,:,1),v(:,:,1));
+    % Plot velocity vectors
+    quiver(1:sv(2),sv(1):-1:1,v(:,:,2),-v(:,:,1));
 end
 
