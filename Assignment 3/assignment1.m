@@ -19,7 +19,7 @@ function assignment1
     plot(cols, rows, 'b*');
     hold off;
     
-    [~,rows,cols] = harris(img, 1*10^(-7), 15, );
+    [~,rows,cols] = harris(img, 1*10^(-7), 15, 1);
     subplot(2,2,2);
     imshow(colorImg);
     hold on;
