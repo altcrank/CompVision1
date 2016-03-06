@@ -13,9 +13,6 @@ function video_filename = tracking(images_path,threshold,window,sigma_h,sigma_lc
     v = VideoWriter(video_filename);
     open(v);
     
-    %thr = 0.00005;
-    %window = 15;
-    %sigma = 1;
     % Detect corners using Harris corner detector
     [~,r,c] = harris(squeeze(images(1,:,:)),threshold,window,sigma_h);
     % Copy rows and columns so that you don't change the original returned
@@ -48,7 +45,7 @@ function video_filename = tracking(images_path,threshold,window,sigma_h,sigma_lc
         for feature = 1:length(r)
             row = round(rows(feature));
             col = round(cols(feature));
-            u = lucas_kanade(Ix,Iy,It,row,col,window);
+            u = lucas_kanade_patch(Ix,Iy,It,row,col,window);
             rows(feature) = rows(feature) + u(1);
             cols(feature) = cols(feature) + u(2);
             % mark corner in frame
