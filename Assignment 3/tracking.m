@@ -1,4 +1,4 @@
-function video_filename = tracking(images_path,threshold,window,sigma)
+function video_filename = tracking(images_path,threshold,window,sigma_h,sigma_lc)
     %Read images
     [original_images,rgb] = read_images(images_path);
     % Get working images - grayscale
@@ -17,7 +17,7 @@ function video_filename = tracking(images_path,threshold,window,sigma)
     %window = 15;
     %sigma = 1;
     % Detect corners using Harris corner detector
-    [~,r,c] = harris(squeeze(images(1,:,:)),threshold,window,sigma);
+    [~,r,c] = harris(squeeze(images(1,:,:)),threshold,window,sigma_h);
     % Copy rows and columns so that you don't change the original returned
     % ones
     rows = r;
@@ -30,6 +30,8 @@ function video_filename = tracking(images_path,threshold,window,sigma)
     end
     % write frame in video
     writeVideo(v,frame);
+    % Uncomment for first frame of the video
+%     imwrite(frame,[images_path,'1.jpg']);
     
     is = size(images);
     for frame_no = 1:is(1)-1
@@ -40,7 +42,7 @@ function video_filename = tracking(images_path,threshold,window,sigma)
         frame = select_frame(original_images,frame_no+1,rgb);
         
         % Prepare gradients for lucas-kanade
-        [Ix,Iy,It] = compute_gradients(image1,image2,sigma,sigma,window);
+        [Ix,Iy,It] = compute_gradients(image1,image2,sigma_lc,sigma_lc,window);
         
         % Do lucas-kanade for each corner
         for feature = 1:length(r)
@@ -54,6 +56,10 @@ function video_filename = tracking(images_path,threshold,window,sigma)
         end
         % write frame in video
         writeVideo(v, frame);
+        % Uncomment for middle and last frame of the video
+%         if frame_no == round(is(1) / 2) || frame_no == is(1) - 1
+%             imwrite(frame,[images_path,num2str(frame_no),'.jpg']);
+%         end
     end
     close(v);
     %implay(video_filename);

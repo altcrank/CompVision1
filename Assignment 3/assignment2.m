@@ -1,6 +1,7 @@
 function v = assignment2(image1_path,image2_path)
     image1 = im2double(imread(image1_path));
     image2 = im2double(imread(image2_path));
+    orig_image = image1;
     if (length(image1(1,1,:)) == 3)
         image1 = rgb2gray(image1);
         image2 = rgb2gray(image2);
@@ -32,6 +33,10 @@ function v = assignment2(image1_path,image2_path)
     end
     sv = size(v);
     % Plot velocity vectors
-    quiver(1:sv(2),sv(1):-1:1,v(:,:,2),-v(:,:,1));
+    imshow(orig_image);
+    hold on;
+    %quiver(1:sv(2),sv(1):-1:1,v(:,:,2),-v(:,:,1));
+    quiver(cols,rows,v(:,:,2),v(:,:,1),'r');
+    hold off;
 end
 
