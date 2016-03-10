@@ -1,4 +1,7 @@
-function transformed = transform_image(image,image2,H)
+function transformed = transform_image(image,H)
+    % not quite sure why, but need to reverse angle of rotation
+    H(1:2,1:2) = H(1:2,1:2)';
+    % Figure out boundaries
     s = size(image);
     img_corners(:,1) = [1 1 1]';
     img_corners(:,2) = [s(1) 1 1]';

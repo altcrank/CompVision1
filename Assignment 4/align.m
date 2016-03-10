@@ -21,11 +21,14 @@ function H = align(image_path1, image_path2)
     % Scores - L2 dist between them
     
     H = ransac(image1, image2, frames1, frames2, matches,1000,10);
-    % not quite sure why, but need to reverse angle of rotation
-    % try working in cartesian, and not image coord system.
-    H(1,2) = -H(1,2);
-    H(2,1) = -H(2,1);
+    T = maketform('affine', [H(1,:)', H(2,:)', [0; 0; 1]]);
+    B = imtransform(image1, T);
     
-    transformed_image1 = transform_image(image1,image2,H);
+    subplot(1,2,1);
+    imshow(B);
+
+    transformed_image1 = transform_image(image1,H);
+    
+    subplot(1,2,2);
     imshow(transformed_image1);
 end
