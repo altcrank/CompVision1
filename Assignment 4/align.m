@@ -26,8 +26,9 @@ function H = align(image_path1, image_path2)
     
     subplot(1,2,1);
     imshow(B);
-
+    
     transformed_image1 = transform_image(image1,H);
+%     transformed_image1 = stitch_transform(image1,image2,H);
     
     subplot(1,2,2);
     imshow(transformed_image1);
