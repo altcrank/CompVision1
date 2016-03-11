@@ -1,22 +1,30 @@
 function transformed = transform_image(image,H)
+    HI = invert(H);
     % Figure out what matlab magic is the source of this!
+    HI = prepare(HI);
     H = prepare(H);
     % Figure out boundaries
     s = size(image);
     img_corners(:,1) = [1 1 1]';
     img_corners(:,2) = [s(1) 1 1]';
     img_corners(:,3) = [1 s(2) 1]';
-    img_corners(:,4) = [s(1) s(2) 1]';
+    img_corners(:,4) = [s(1:2) 1]';
     ts = round(H * img_corners);
     mins = min(ts');
-    % Indexing starts from one
-    minx = mins(1)-1;
-    miny = mins(2)-1;
+    maxs = max(ts');
+    minx = mins(1);
+    maxx = maxs(1);
+    miny = mins(2);
+    maxy = maxs(2);
     
-    for row = 1:size(image,1)
-        for col = 1:size(image,2)
-            t_coords = round(H * [row col 1]');
-            transformed(t_coords(1)-minx,t_coords(2)-miny,:) = image(row,col,:);
+    s = size(image);
+    for row = minx:maxx
+        for col = miny:maxy
+            im_coords = round(HI * [row col 1]');
+            % If within original image
+            if all(im_coords > 0) && all(im_coords' <= s(1:2))
+                transformed(row-minx+1,col-miny+1,:) = image(im_coords(1), im_coords(2),:);
+            end
         end
     end
 end

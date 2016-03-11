@@ -1,4 +1,4 @@
-function H = construct_transform(frames1,frames2,matches)
+function H = compute_transform(frames1,frames2,matches)
     for match = 1:size(matches,2)
         f = frames1(:,matches(1,match));
         A(2*match-1,:) = [f(1) f(2) 0 0 1 0];
