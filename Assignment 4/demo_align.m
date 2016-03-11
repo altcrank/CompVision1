@@ -10,7 +10,6 @@ function transform = demo_align(image_path1,image_path2)
     % For comparison with the matlab functions
     %T = maketform('affine', [transform(1,:)', transform(2,:)', [0; 0; 1]]);
     %B = imtransform(image1, T);
-    transformation
     %subplot(1,2,1);
     %imshow(B);
     
