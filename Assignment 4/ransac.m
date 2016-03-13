@@ -16,4 +16,5 @@ function [H,inliers] = ransac(frames1,frames2,matches,reps,sample_size)
             best = inliers_count;
         end
     end
+    %disp([best size(matches,2)]);
 end
