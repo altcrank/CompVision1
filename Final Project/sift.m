@@ -1,6 +1,7 @@
 function [frames,descr] = sift(image,type,step)
 % sift extract SIFT features
-% type determines whether the features to be greyscale, RGB, rgb or opponent
+% image - an RGB image to extract SIFT features from
+% type - determines whether the features to be greyscale, RGB, rgb or opponent
 % step - if 0 - sparse features, else dense with step size 'step'
     
     % Trasform image to appropriate channels
@@ -31,4 +32,3 @@ function [frames,descr] = sift(image,type,step)
         end
     end
 end
-
