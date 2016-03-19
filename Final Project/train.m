@@ -1,4 +1,4 @@
-function model = train(data_path,images_per_class,vocab_size,type,step)
+function [vocab,model] = train(data_path,images_per_class,vocab_size,type,step)
     % Define some constants
     train_substring = '_train';
     model_path = strcat(data_path,'/FeatureData/');
@@ -14,13 +14,16 @@ function model = train(data_path,images_per_class,vocab_size,type,step)
     [vocab_images,vocab_used] = select_images(images,images_per_class,{});
     vocab_images = flatten(vocab_images);
     vocab = build_visual_vocabulary(vocab_images,vocab_size,type,step);
+    save(strcat(model_path,'vocab.mat'),'vocab');
     % Sample images from every class (different from the vocabulary ones)
     [train_images,~] = select_images(images,images_per_class,vocab_used);
     quantized_images = quantize_images(vocab,train_images,type,step);
     [train_data,classes] = prepare_data(quantized_images);
     for class = 1:size(quantized_images,2)
         labels = class == classes;
-        model = svmtrain(train_data,labels);
+        labels(labels == 0) = -1;
+        % To see options type svmtrain in command window
+        model = svmtrain(train_data,double(labels),['-q -s ' num2str(2)]);
         model_name = strcat(class_names{class},'.mat');
         save(strcat(model_path,model_name),'model');
     end
