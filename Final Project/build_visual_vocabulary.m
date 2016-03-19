@@ -1,4 +1,4 @@
-function vocab = build_visual_vocabulary(images,size,type,step)
+function vocab = build_visual_vocabulary(images,vocab_size,type,step)
 % build_visual_vocabulary builds a vocabulary of visual words
 % i.e. clusters all features of the input images
 % images - a cell of size [1 N], containing the N input images
@@ -17,5 +17,5 @@ function vocab = build_visual_vocabulary(images,size,type,step)
     % But we don't want it to have changed
     assert(all(descriptors(:,1) == data(:,1))');
     % Cluster features
-    [vocab,~] = vl_kmeans(data,size);
+    [vocab,~] = vl_kmeans(data,vocab_size);
 end

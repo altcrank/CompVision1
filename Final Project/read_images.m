@@ -1,5 +1,6 @@
-function images = read_images(path)
+function [images,image_names] = read_images(path)
     images = {};
+    image_names = {};
     files = dir(path);
     for file = files'
         % Because matlab reads in '.' and '..'
@@ -7,7 +8,9 @@ function images = read_images(path)
         if isdir(file.name) || numel(strfind(file.name,'.db'))
             continue
         end
-        image = imread([path,'/',file.name]);
+        image_name = [path,'/',file.name];
+        image = imread(image_name);
         images = [images,image];
+        image_names = [image_names,image_name];
     end
 end
