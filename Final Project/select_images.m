@@ -9,12 +9,18 @@ function [selected,used] = select_images(images,images_per_class,blacklist)
         for i = 1:1:size(images,2)
             % Pick images_per_class images at random
             images_class = images{i};
+
+            %To debug training and testing use same images for everything
+            %(in test) as well
             if numel(blacklist)
                 blacklist_class = blacklist{i};
             else
                 blacklist_class = [];
             end
             perm = randperm(size(images_class,2));
+%             blacklist_class = [];
+%             perm = 1:size(images_class,2);
+            
             sample_size = min(images_per_class,length(perm));
             class_indices = [];
             class_selected = {};

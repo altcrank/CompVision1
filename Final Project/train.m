@@ -23,7 +23,7 @@ function [vocab,model] = train(data_path,images_per_class,vocab_size,type,step)
         labels = class == classes;
         labels(labels == 0) = -1;
         % To see options type svmtrain in command window
-        model = svmtrain(train_data,double(labels),['-q -s ' num2str(2)]);
+        model = svmtrain(double(labels),train_data,['-q -s ' num2str(2)]);
         model_name = strcat(class_names{class},'.mat');
         save(strcat(model_path,model_name),'model');
     end
