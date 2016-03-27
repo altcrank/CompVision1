@@ -4,7 +4,7 @@ function [frames,descr] = sift(image,type,step)
 % type - determines whether the features to be greyscale, RGB, rgb or opponent
 % step - if 0 - sparse features, else dense with step size 'step'
     
-    % Trasform image to appropriate channels
+    % Transform image to appropriate channels
     working_image = RGB2(type,image);
     channels_count = length(working_image(1,1,:));
     % For sparse SIFT extract frames from greyscale
