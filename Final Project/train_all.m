@@ -15,7 +15,7 @@
 % train('Caltech4',2000,'grey',0);
 % train('Caltech4',4000,'grey',0);
 
-train('Caltech4',400,50,'grey',0,0);
-train('Caltech4',400,50,'grey',0,2);
-train('Caltech4',400,50,'grey',0,3);
-train('Caltech4',400,50,'grey',0,1);
+% train('Caltech4',50,400,'grey',0,0);
+% train('Caltech4',50,400,'grey',0,2);
+train('Caltech4',50,400,'grey',0,3);
+train('Caltech4',50,400,'grey',0,1);

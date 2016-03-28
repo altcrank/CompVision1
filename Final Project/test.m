@@ -10,12 +10,12 @@ function [ranking,mAP] = test(data_path,vocab_size,type,step,kernel)
     descriptors = sift_images(feature_path,images,type,step);
     % Get model names
     vocab_name = strcat(model_path,construct_name('vocab',vocab_size,type,step));
-    model_names = get_model_names(model_path,class_names,vocab_size,type,step);
+    %model_names = get_model_names(model_path,class_names,vocab_size,type,step);
     % If the models do not exist, train them
-    if ~models_exist(vocab_name,model_names)
+    %if ~models_exist(vocab_name,model_names)
         % the number is images_per_class
-        train(data_path,50,vocab_size,type,step);
-    end
+    %    train(data_path,50,vocab_size,type,step);
+    %end
     % Load vocabulary
     load(vocab_name,'vocab');
     

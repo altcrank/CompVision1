@@ -1,9 +1,9 @@
-% path = 'Caltech4/Results/';
-% % Create path
-% if exist(path,'dir') ~= 7
-%     mkdir(path);
-% end
-%     
+path = 'Caltech4/Results/';
+% Create path
+if exist(path,'dir') ~= 7
+    mkdir(path);
+end
+
 % [ranking,mAP] = test('Caltech4',400,'grey',0);
 % results = construct_name('results',400,'grey',0);
 % map = construct_name('map',400,'grey',0);
@@ -85,32 +85,24 @@
 
 [ranking,mAP] = test('Caltech4',400,'grey',0,0);
 results = construct_name('results',400,'grey',0);
-results = ['0_',results];
 map = construct_name('map',400,'grey',0);
-map = ['0_',map];
 save(strcat(path,results),'ranking');
 save(strcat(path,map),'mAP');
 
 [ranking,mAP] = test('Caltech4',400,'grey',0,2);
-results = construct_name('results',400,'grey',0);
-results = ['2_',results];
-map = construct_name('map',400,'grey',0);
-map = ['2_',map];
+results = construct_name('results',400,'grey',2);
+map = construct_name('map',400,'grey',2);
 save(strcat(path,results),'ranking');
 save(strcat(path,map),'mAP');
 
-[ranking,mAP] = test('Caltech4',400,'grey',0,3);
-results = construct_name('results',400,'grey',0);
-results = ['3_',results];
-map = construct_name('map',400,'grey',0);
-map = ['3_',map];
-save(strcat(path,results),'ranking');
-save(strcat(path,map),'mAP');
-
-[ranking,mAP] = test('Caltech4',400,'grey',0,1);
-results = construct_name('results',400,'grey',1);
-results = ['1_',results];
-map = construct_name('map',400,'grey',0);
-map = ['1_',map];
-save(strcat(path,results),'ranking');
-save(strcat(path,map),'mAP');
+% [ranking,mAP] = test('Caltech4',400,'grey',0,3);
+% results = construct_name('results',400,'grey',3);
+% map = construct_name('map',400,'grey',3);
+% save(strcat(path,results),'ranking');
+% save(strcat(path,map),'mAP');
+% 
+% [ranking,mAP] = test('Caltech4',400,'grey',0,1);
+% results = construct_name('results',400,'grey',1);
+% map = construct_name('map',400,'grey',1);
+% save(strcat(path,results),'ranking');
+% save(strcat(path,map),'mAP');
