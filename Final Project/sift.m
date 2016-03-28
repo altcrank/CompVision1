@@ -10,7 +10,7 @@ function [frames,descr] = sift(image,type,step)
         descr = [];
         return
     end
-    % Trasform image to appropriate channels
+    % Transform image to appropriate channels
     working_image = RGB2(type,image);
     channels_count = length(working_image(1,1,:));
     % For sparse SIFT extract frames from greyscale
