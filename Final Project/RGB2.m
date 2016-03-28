@@ -4,11 +4,11 @@ function converted = RGB2(space,image)
           converted = RGB2gray(image);
       case 'RGB'
           converted = image;
-      case 'rgb'
+      case 'norm_rgb'
           converted = RGB2rgb(image);
       case 'opponent'
           converted = RGB2opponent(image);
       otherwise
-          error('Possible color space options are grey, RGB, rgb, and opponent.');
+          error('Possible color space options are grey, RGB, norm_rgb, and opponent.');
   end
 end
