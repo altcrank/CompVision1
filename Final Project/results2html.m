@@ -8,13 +8,11 @@ function results2html(vocab_size,type,step)
     ranking = load([result_path,'results_',vocab_size,'_',type,'_',step,'.mat']);
     
     if strcmp(type, 'grey')
-        html_path = ['HtmlResults/VocabSize/', num2str(vocab_size), '.html'];
+        html_path = ['Caltech4/HtmlResults/VocabSize/', num2str(vocab_size), '.html'];
+    elseif ~step
+        html_path = ['Caltech4/HtmlResults/SparseColor/', type, '.html'];
     else
-        if ~step
-            html_path = ['HtmlResults/SparseColor/', type, '.html'];
-        else
-            html_path = ['HtmlResults/DenseColor/', type, '.html'];
-        end
+        html_path = ['Caltech4/HtmlResults/DenseColor/', type, '.html'];
     end
     
     f = fopen('html_path', 'w');
@@ -32,11 +30,8 @@ function results2html(vocab_size,type,step)
     end
     fprintf(f,'<tr><th>Color space</th><td> %s </td></tr>  \n', type);
     fprintf(f,'<tr><th>Vocabulary size</th><td> %d words</td></tr>  \n', vocab_size);
-    %%% how many examples used for building vocabulary??
-    fprintf(f,'<tr><th>Vocabulary fraction</th><td>XXX</td></tr>  \n');
-    %%% TODO: fprintf(f,'<tr><th>SVM training data</th><td>XXX positive, XXX negative
-    %per class</td></tr>  \n');
-
+    fprintf(f,'<tr><th>Vocabulary fraction</th><td> 1865 </td></tr>  \n');
+    fprintf(f,'<tr><th>SVM training data</th><td> 500/465/400/500 positive, 1365/1400/1465/1365 negative per class</td></tr>  \n');
     fprintf(f,'<tr><th>SVM kernel type</th><td> Linear </td></tr> \n');
     fprintf(f,'</table> \n');
     fprintf(f,'<h1>Prediction lists (MAP: %4.3f )</h1> \n', mean(mAP));
