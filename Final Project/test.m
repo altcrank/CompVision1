@@ -14,13 +14,12 @@ function [ranking,mAP] = test(data_path,vocab_size,type,step)
     % If the models do not exist, train them
     if ~models_exist(vocab_name,model_names)
         % the number is images_per_class
-        train(data_path,vocab_size,type,step);
+        train(data_path,50,vocab_size,type,step);
     end
     % Load vocabulary
     load(vocab_name,'vocab');
     
-    
-    quantized_images = quantize_images(vocab,descriptors);
+    quantized_images = quantize_images(vocab,images,type,step);
     [test_data,classes] = prepare_data(quantized_images);
     ranking = {};
     for class = 1:size(quantized_images,2)

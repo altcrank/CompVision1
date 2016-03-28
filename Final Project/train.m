@@ -1,19 +1,20 @@
-function train(data_path,vocab_size,type,step)
+function train(data_path,images_per_class,vocab_size,type,step)
     tic;
     % Define some constants
     train_substring = '_train';
     model_path = strcat(data_path,'/FeatureData/');
-    feature_path = strcat(model_path,'Features/');
     images_path = strcat(data_path,'/ImageData/');
     % Load images in a cell of cells - one for each image class
     [images,class_names,~] = load_data(images_path,train_substring);
-    descriptors = sift_images(feature_path,images,type,step);
-    % Build a vocabulary
-    vocab = build_visual_vocabulary(descriptors,vocab_size);
+    % Sample images from every class and build a vocabulary
+    [vocab_images,vocab_used] = select_images(images,images_per_class,{});
+    vocab_images = flatten(vocab_images);
+    vocab = build_visual_vocabulary(vocab_images,vocab_size,type,step);
     vocab_name = strcat(model_path,construct_name('vocab',vocab_size,type,step));
     save(vocab_name,'vocab');
     % Sample images from every class (different from the vocabulary ones)
-    quantized_images = quantize_images(vocab,descriptors);
+    [train_images,~] = select_images(images,images_per_class,vocab_used);
+    quantized_images = quantize_images(vocab,train_images,type,step);
     [train_data,classes] = prepare_data(quantized_images);
     for class = 1:size(quantized_images,2)
         labels = double(class == classes);
