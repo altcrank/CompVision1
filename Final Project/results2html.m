@@ -15,6 +15,13 @@ function results2html(vocab_size,type,step)
         html_path = ['Caltech4/HtmlResults/DenseColor/', type, '.html'];
     end
     
+    %if ~step
+    %    model = 'Sparse';
+    %else
+    %    model = 'Dense';
+    %end
+    %html_path = ['Caltech4/HtmlResults/NewTests/',model,num2str(vocab_size),type];
+    
     f = fopen(html_path, 'w');
     fprintf(f,'<!DOCTYPE html> \n <html lang="en"> \n <head> \n <meta charset="utf-8"> \n <title>Image list prediction</title> \n <style type="text/css"> \n img { \n width:200px; \n } \n </style> \n </head> \n <body> \n');
     fprintf(f,'<h2> Georgi Terziev, Ilse van der Linden </h2> \n');
