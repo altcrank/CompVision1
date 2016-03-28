@@ -1,4 +1,4 @@
-function [ranking,mAP] = test(data_path,vocab_size,type,step)
+function [ranking,mAP] = test(data_path,vocab_size,type,step,kernel)
     tic;
     % Define some constants
     test_substring = '_test';
@@ -25,8 +25,9 @@ function [ranking,mAP] = test(data_path,vocab_size,type,step)
     for class = 1:size(quantized_images,2)
         labels = double(class == classes);
         labels(labels == 0) = -1;
-        model_name = strcat(model_path,construct_name(class_names{class},vocab_size,type,step));
-        load(model_name,'model');
+        model_name = construct_name(class_names{class},vocab_size,type,step);
+        model_name = [num2str(kernel),'_',model_name];
+        load(strcat(model_path,model_name),'model');
         % To see options type svmpredict in command window
         [~,~,decision_values] = svmpredict(labels,test_data,model,'-q');
         % Put decision vals and names in array to sort together

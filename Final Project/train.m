@@ -1,4 +1,4 @@
-function train(data_path,images_per_class,vocab_size,type,step)
+function train(data_path,images_per_class,vocab_size,type,step,kernel)
     tic;
     % Define some constants
     train_substring = '_train';
@@ -20,8 +20,9 @@ function train(data_path,images_per_class,vocab_size,type,step)
         labels = double(class == classes);
         labels(labels == 0) = -1;
         % To see options type svmtrain in command window
-        model = svmtrain(labels,train_data,['-q -t ' num2str(0)]);
+        model = svmtrain(labels,train_data,['-q -t ' num2str(kernel)]);
         model_name = construct_name(class_names{class},vocab_size,type,step);
+        model_name = [num2str(kernel),'_',model_name];
         save(strcat(model_path,model_name),'model');
     end
 
